@@ -1,0 +1,15 @@
+{
+  "name": "skykid",
+  "version": "1.0.0",
+  "description": "Discord bot for Sky : COTL - Currently planning to include Shard Times More features pending.",
+  "main": "shard-calc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "luxon": "^3.4.4",
+    "node": "^21.6.2"
+  }
+}
