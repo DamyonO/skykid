@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.5",
     "luxon": "^3.4.4",
     "node": "^21.6.2"
   }

@@ -1,3 +1,8 @@
+/*
+    Code for the Shard Calculator comes from PlutoyDev and Jiralite on GitHub
+    Translated by me for JS
+*/
+
 const { Duration, DateTime } = require('luxon');
 
 const earlySkyOffset = Duration.fromObject({ minutes: -32, seconds: -10});
@@ -8,9 +13,9 @@ const endOffset = Duration.fromObject({ hours: 4});
 const blackShardInterval = Duration.fromObject({ hours: 8});
 const redShardInterval = Duration.fromObject({ hours: 6});
 
-const realms = ['prarie', 'forest', 'valley', 'wasteland', 'vault'];
-const realmsFull = ['Daylight Prarie', 'Hidden Forest', 'Valley of Triumph', 'Golden Wasteland', 'Vault of Knowledge'];
-const realmsNick = ['Prarie', 'Forest', 'Valley', 'Wasteland', 'Vault'];
+const realms = ['prairie', 'forest', 'valley', 'wasteland', 'vault'];
+const realmsFull = ['Daylight Prariie', 'Hidden Forest', 'Valley of Triumph', 'Golden Wasteland', 'Vault of Knowledge'];
+const realmsNick = ['Prairie', 'Forest', 'Valley', 'Wasteland', 'Vault'];
 
 const shardsInfo = [
     {
@@ -71,16 +76,16 @@ const overrideRewardAC = {
 };
 
 function getShardInfo(date) {
-    const today = date.setZone('America/Los_Angeles').startOf('day')
+    const today = DateTime.fromJSDate(date, {zone : 'America/Los_Angeles'}).startOf('day')
     const [dayOfMth, dayOfWk] = [today.day, today.weekday]
-    const isRed = dayofMth % 2 === 1
+    const isRed = dayOfMth % 2 === 1
     const realmIdx = (dayOfMth - 1) % 5
     const infoIndex = isRed ? (((dayOfMth - 1) / 2) % 3) + 2 : (dayOfMth / 2) % 2
     const { noShardWkDay, interval, offset, maps, defRewardAC } = shardsInfo[infoIndex]
     const haveShard = !noShardWkDay.includes(dayOfWk)
     const map = maps[realmIdx]
     const rewardAC = isRed ? overrideRewardAC[map] ?? defRewardAC : undefined
-    const occurences = Array.from({ length: 3 }, (_, i) => {
+    const occurrences = Array.from({ length: 3 }, (_, i) => {
         const start = today.plus(offset).plus(interval.mapUnits(x => x * i))
         const land = start.plus(landOffset)
         const end = start.plus(endOffset)
@@ -92,10 +97,12 @@ function getShardInfo(date) {
         haveShard,
         offset,
         interval,
-        lastEnd: occurences[2].end,
+        lastEnd: occurrences[2].end,
         realm: realms[realmIdx],
         map,
         rewardAC,
-        occurences,
+        occurrences,
     }
 }
+
+module.exports = {getShardInfo}
