@@ -1,6 +1,9 @@
 /*
     Code for the Shard Calculator comes from PlutoyDev and Jiralite on GitHub
     Translated by me for JS
+
+    Sky Shard Web App Created by PlutoyDev: https://sky-shards.pages.dev/
+    Source Code: https://github.com/PlutoyDev/sky-shards
 */
 
 const { Duration, DateTime } = require('luxon');
@@ -25,7 +28,7 @@ const shardsInfo = [
             hours: 1,
             minutes: 50,
         }),
-        maps: ['prairie.butterfly', 'forest.brook', 'valley.rink', 'wasteland.temple', 'vault.starlight'],
+        maps: ['Butterfly', 'Brook', 'Rink', 'Temple', 'Starlight'],
     },
     {
         noShardWkDay: [7, 1],
@@ -34,7 +37,7 @@ const shardsInfo = [
             hours: 2,
             minutes: 10
         }),
-        maps: ['prairie.village', 'forest.boneyard', 'valley.rink', 'wasteland.battlefield', 'vault.starlight']
+        maps: ['Village', 'Boneyard', 'Rink', 'Battlefield', 'Starlight']
     },
     {
         noShardWkDay: [1,2],
@@ -43,7 +46,7 @@ const shardsInfo = [
             hours:7,
             minutes: 40
         }),
-        maps: ['prairie.cave', 'forest.end', 'valley.dreams', 'wasteland.graveyard', 'vault.jelly'],
+        maps: ['Cave', 'End', 'Dreams', 'Graveyard', 'Jelly'],
         defRewardAC: 2
     },
     {
@@ -53,7 +56,7 @@ const shardsInfo = [
             hours: 2,
             minutes: 20
         }),
-        maps: ['prairie.bird', 'forest.tree', 'valley.dreams', 'wasteland.crab', 'vault.jelly'],
+        maps: ['Bird', 'Tree', 'Dreams', 'Crab', 'Jelly'],
         defRewardAC: 2.5,
     },
     {
@@ -63,7 +66,7 @@ const shardsInfo = [
             hours: 3,
             minutes: 30
         }),
-        maps: ['prairie.island', 'forest.sunny', 'valley.hermit', 'wasteland.ark', 'vault.jelly'],
+        maps: ['Island', 'Sunny', 'Hermit', 'Ark', 'Jelly'],
         defRewardAC: 3.5,
     },
 ];
@@ -98,7 +101,7 @@ function getShardInfo(date) {
         offset,
         interval,
         lastEnd: occurrences[2].end,
-        realm: realms[realmIdx],
+        realm: realmsFull[realmIdx],
         map,
         rewardAC,
         occurrences,

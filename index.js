@@ -46,9 +46,9 @@ function shardCommandHandler(message) {
     const now = new Date();
     const shardInfo = getShardInfo(now)
 
-    const start1 = `<t:${Math.floor(shardInfo.occurrences[0].start / 1000)}:T>`;
-    const start2 = `<t:${Math.floor(shardInfo.occurrences[1].start / 1000)}:T>`;
-    const start3 = `<t:${Math.floor(shardInfo.occurrences[2].start / 1000)}:T>`;
+    const start1 = `<t:${Math.floor(shardInfo.occurrences[0].land / 1000)}:T>`;
+    const start2 = `<t:${Math.floor(shardInfo.occurrences[1].land / 1000)}:T>`;
+    const start3 = `<t:${Math.floor(shardInfo.occurrences[2].land / 1000)}:T>`;
 
     const end1 = `<t:${Math.floor(shardInfo.occurrences[0].end / 1000)}:T>`
     const end2 = `<t:${Math.floor(shardInfo.occurrences[1].end / 1000)}:T>`
