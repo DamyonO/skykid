@@ -1,5 +1,5 @@
 /*
-    Code for the Shard Calculator comes from PlutoyDev and Jiralite on GitHub
+    Code for the Shard Calculator comes from PlutoyDev on GitHub
     Translated by me for JS
 
     Sky Shard Web App Created by PlutoyDev: https://sky-shards.pages.dev/
@@ -88,8 +88,12 @@ function getShardInfo(date) {
     const haveShard = !noShardWkDay.includes(dayOfWk)
     const map = maps[realmIdx]
     const rewardAC = isRed ? overrideRewardAC[map] ?? defRewardAC : undefined
+    let firstStart = today.plus(offset)
+    if (dayOfWk === 7 && today.isInDST !== firstStart.isInDST) {
+        firstStart = firstStart.plus({ hours: firstStart.isInDST ? -1 : 1})
+    }
     const occurrences = Array.from({ length: 3 }, (_, i) => {
-        const start = today.plus(offset).plus(interval.mapUnits(x => x * i))
+        const start = firstStart.plus(interval.mapUnits(x => x * i))
         const land = start.plus(landOffset)
         const end = start.plus(endOffset)
         return { start, land, end}

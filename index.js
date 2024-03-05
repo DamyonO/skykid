@@ -40,6 +40,9 @@ client.on('messageCreate', (message) => {
     if(message.content === (commandPrefix + 'hi')){
         message.reply("Hi!")
     }
+    if (message.content === (commandPrefix + 'Music')) {
+        message.reply("WIP")
+    }
 })
 
 function shardCommandHandler(message) {
