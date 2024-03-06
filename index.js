@@ -28,10 +28,36 @@ client.on('ready', (c) => {
     scheduleDailyPost()
 })
 
-client.on('messageCreate', (message) => {
-    if (message.author.bot) return
+client.on('messageCreate', async (message) => {
+    if (message.author.bot || !message.content.startsWith(commandPrefix)) return
 
     const content = message.content.trim
+    const args = message.content.slice(commandPrefix.length).trim().split(/ +/)
+    const command = args.shift().toLowerCase();
+
+    if (command === 'feedback'){
+        if(!args.length){
+            return message.reply('Please provide your feedback after the command, like this `sky.Feedback Your Feedback Here`')
+        }
+
+        const feedbackContent = args.join(' ')
+        const ownerID = process.env.OWNER_ID
+
+        const user = await client.users.fetch(ownerID)
+
+        if(!user) {
+            return message.reply('Unable to contact bot owner. Please try again later')
+        }
+
+        user.send(`New feedback from @${message.author.tag} (${message.author.id}):\n${feedbackContent}`)
+            .then(() => {
+                message.reply('Feedback submitted successfully! Thanks for your input.')
+            })
+            .catch((err) => {
+                console.error(`Error sending feedback: ${err}`)
+                message.reply("An error occured while trying to submit feedback. Please try again later")
+            })
+    }
 
     if(message.content === (commandPrefix + 'Shard')) {
         shardCommandHandler(message)
