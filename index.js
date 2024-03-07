@@ -108,9 +108,9 @@ async function postDailyShardInfo() {
 
     const channel = await client.channels.fetch(channelId)
 
-    const start1 = shardInfo.occurrences[0].start.setZone(timeZone).toLocaleString(DateTime.TIME_WITH_SECONDS)
-    const start2 = shardInfo.occurrences[1].start.setZone(timeZone).toLocaleString(DateTime.TIME_WITH_SECONDS)
-    const start3 = shardInfo.occurrences[2].start.setZone(timeZone).toLocaleString(DateTime.TIME_WITH_SECONDS)
+    const start1 = shardInfo.occurrences[0].land.setZone(timeZone).toLocaleString(DateTime.TIME_WITH_SECONDS)
+    const start2 = shardInfo.occurrences[1].land.setZone(timeZone).toLocaleString(DateTime.TIME_WITH_SECONDS)
+    const start3 = shardInfo.occurrences[2].land.setZone(timeZone).toLocaleString(DateTime.TIME_WITH_SECONDS)
 
     const end1 = shardInfo.occurrences[0].end.setZone(timeZone).toLocaleString(DateTime.TIME_WITH_SECONDS)
     const end2 = shardInfo.occurrences[1].end.setZone(timeZone).toLocaleString(DateTime.TIME_WITH_SECONDS)
