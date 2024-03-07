@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, ActivityType } = require('discord.js')
+const { Client, GatewayIntentBits, ActivityType, EmbedBuilder, Embed } = require('discord.js')
 const {getShardInfo} = require('./src/shard-calc');
 const { time } = require('console');
 const {Duration, DateTime} = require('luxon')
@@ -59,14 +59,24 @@ client.on('messageCreate', async (message) => {
             })
     }
 
-    if(message.content === (commandPrefix + 'Shard')) {
+    if(command === "shard") {
         shardCommandHandler(message)
     }
 
-    if(message.content === (commandPrefix + 'hi')){
-        message.reply("Hi!")
+    if(command === "help"){
+        const embed = new EmbedBuilder()
+            .setColor(0xd47839)
+            .setTitle('List of Commands')
+            .setDescription('Here is a list of commands that you can use with your Skykid!')
+            .addFields(
+                { name: '\u200b', value: '\u200b'},
+                { name: '`sky.Help`', value: 'Displays a list of commands'},
+                { name: '`sky.Shard`', value: 'Displays the Shard for the day'},
+                { name: 'sky.Music', value: 'Returns a random music sheet (WIP)'}
+            )
+        message.reply({embeds: [embed], ephemeral : true})
     }
-    if (message.content === (commandPrefix + 'Music')) {
+    if (command === "music") {
         message.reply("WIP")
     }
 })
