@@ -92,24 +92,24 @@ function shardCommandHandler(message) {
     const end1 = `<t:${Math.floor(shardInfo.occurrences[0].end / 1000)}:T>`
     const end2 = `<t:${Math.floor(shardInfo.occurrences[1].end / 1000)}:T>`
     const end3 = `<t:${Math.floor(shardInfo.occurrences[2].end / 1000)}:T>`
+    if(shardInfo.haveShard){
+        const reply = new EmbedBuilder()
+            .setColor(shardInfo.isRed ? 0xFF0000 : 0x000000)
+            .setTitle(`Todays Shard Is ${shardInfo.isRed ? 'Red' : 'Black'}`)
+            .setDescription("Here is all the information you need in regard to the shard!")
+            .addFields(
+                { name: "Realm", value: `${shardInfo.realm}`},
+                { name: "Map", value: `${shardInfo.realm}` },
+                { name: "First Landing", value: `Lands At ${start1}\nEnds At ${end1}`},
+                { name: "Second Landing", value: `Lands At ${start2}\nEnds At ${end2}`},
+                { name: "Final Landing", value: `Lands At ${start3}\nEnds At${end3}`},
+                { name: "Rewarded AC", value: `${shardInfo.rewardAC ?? 'Not Specified'}`}
+            )
+        message.reply({embeds: [reply]})
+    } else {
+        message.reply("No Shard Today!")
+    }
 
-    if (shardInfo.haveShard) {
-        const reply = `**Daily Shard Info:**\n`
-        + `Realm: ${shardInfo.realm}\n`
-        + `Map: ${shardInfo.map}\n`
-        + `Shard Type: ${shardInfo.isRed ? `Red` : `Black`}\n`
-        + `Start Time 1: ${start1}\n`
-        + `End Time 1: ${end1}\n`
-        + `Start Time 2: ${start2}\n`
-        + `End Time 2: ${end2}\n`
-        + `Start Time 3: ${start3}\n`
-        + `End Time 3: ${end3}\n`
-        + `Reward AC: ${shardInfo.rewardAC ?? 'Not Specified'}`
-    
-        message.reply(reply);
-      } else {
-        message.reply("No shard today.");
-      }
 }
 
 async function postDailyShardInfo() {
@@ -126,17 +126,18 @@ async function postDailyShardInfo() {
     const end2 = shardInfo.occurrences[1].end.setZone(timeZone).toLocaleString(DateTime.TIME_WITH_SECONDS)
     const end3 = shardInfo.occurrences[2].end.setZone(timeZone).toLocaleString(DateTime.TIME_WITH_SECONDS)
     if(shardInfo.haveShard) {
-        const message = `**Daily Shard Info:**\n`
-        + `Realm: ${shardInfo.realm}\n`
-        + `Map: ${shardInfo.map}\n`
-        + `Shard Type: ${shardInfo.isRed ? `Red` : `Black`}\n`
-        + `Start Time 1: ${start1}\n`
-        + `End Time 1: ${end1}\n`
-        + `Start Time 2: ${start2}\n`
-        + `End Time 2: ${end2}\n`
-        + `Start Time 3: ${start3}\n`
-        + `End Time 3: ${end3}\n`
-        + `Reward AC: ${shardInfo.rewardAC ?? 'Not Specified'}`
+        const message = new EmbedBuilder()
+            .setColor(shardInfo.isRed ? 0xFF0000 : 0x000000)
+            .setTitle(`Todays Shard Is ${shardInfo.isRed ? 'Red' : 'Black'}`)
+            .setDescription("Here is all the information you need in regard to the shard!")
+            .addFields(
+                { name: "Realm", value: `${shardInfo.realm}`},
+                { name: "Map", value: `${shardInfo.realm}` },
+                { name: "First Landing", value: `Lands At ${start1}\nEnds At ${end1}`},
+                { name: "Second Landing", value: `Lands At ${start2}\nEnds At ${end2}`},
+                { name: "Final Landing", value: `Lands At ${start3}\nEnds At${end3}`},
+                { name: "Rewarded AC", value: `${shardInfo.rewardAC ?? 'Not Specified'}`}
+            )
 
         channel.send(message);
     } else {
