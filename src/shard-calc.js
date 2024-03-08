@@ -72,10 +72,10 @@ const shardsInfo = [
 ];
 
 const overrideRewardAC = {
-    'forest.end': 2.5,
-    'valley.dreams': 2.5,
-    'forest.tree': 3.5,
-    'vault.jelly': 3.5
+    'End': 2.5,
+    'Dreams': 2.5,
+    'Tree': 3.5,
+    'Jelly': 3.5
 };
 
 function getShardInfo(date) {

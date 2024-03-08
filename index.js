@@ -1,5 +1,6 @@
 const { Client, GatewayIntentBits, ActivityType, EmbedBuilder, Embed } = require('discord.js')
 const {getShardInfo} = require('./src/shard-calc');
+const{ infographs } = require('./src/infographics')
 const { time } = require('console');
 const {Duration, DateTime} = require('luxon')
 
@@ -81,7 +82,7 @@ client.on('messageCreate', async (message) => {
     }
 })
 
-function shardCommandHandler(message) {
+async function shardCommandHandler(message) {
     const now = new Date();
     const shardInfo = getShardInfo(now)
 
@@ -93,6 +94,8 @@ function shardCommandHandler(message) {
     const end2 = `<t:${Math.floor(shardInfo.occurrences[1].end / 1000)}:T>`
     const end3 = `<t:${Math.floor(shardInfo.occurrences[2].end / 1000)}:T>`
     if(shardInfo.haveShard){
+        const image = await infographs(shardInfo.isRed, shardInfo.map)
+        console.log("Image URL: ", image)
         const reply = new EmbedBuilder()
             .setColor(shardInfo.isRed ? 0xFF0000 : 0x000000)
             .setTitle(`Todays Shard Is ${shardInfo.isRed ? 'Red' : 'Black'}`)
@@ -105,9 +108,16 @@ function shardCommandHandler(message) {
                 { name: "Final Landing", value: `Lands At ${start3}\nEnds At${end3}`},
                 { name: "Rewarded AC", value: `${shardInfo.rewardAC ?? 'Not Specified'}`}
             )
+            .setImage(image)
+
         message.reply({embeds: [reply]})
     } else {
-        message.reply("No Shard Today!")
+        const imgURL = 'https://media.discordapp.net/attachments/801778605486374943/1213760402303885332/Image_6.jpeg?ex=65f6a576&is=65e43076&hm=75fc1e10cc1ac25dba9e2893ceb91511e2a36c5922c475aa267639d0fb53eb67&=&format=webp&width=1390&height=1390'
+        const replyOptions = {
+            files: imgURL ? [imgURL] : []
+        }
+
+        message.reply(replyOptions)
     }
 
 }
