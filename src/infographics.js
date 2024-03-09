@@ -1,25 +1,8 @@
 /*
     Returns the infographic for the daily shard
 */
-const mysql = require("mysql")
+const db = require("./connect-db")
 require('dotenv').config()
-
-const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: "skydb"
-
-})
-
-db.connect(err =>{
-    if(err){
-        console.log(err.message)
-        return
-    }
-    console.log("Database Connected")
-})
 
 function infographs(isRed, map) {
     return new Promise((resolve, reject) => {
@@ -39,7 +22,6 @@ function infographs(isRed, map) {
 
                 if (results.length > 0) {
                     const item = results[0].img;
-                    console.log(item);
                     resolve(item);
                 } else {
                     reject(new Error('No results found'));

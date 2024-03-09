@@ -43,11 +43,16 @@ client.on('messageCreate', async (message) => {
                 .setTitle('How To Use the Music Command!')
                 .setDescription('Want to learn some new music, but dont know where to begin? Use the Music command!\nsky.music Genre')
                 .setColor(0x9769e0)
+                .setFooter({text: "Music Provided By the Sky Music Library"})
+                .setAuthor({name: "Sky Music Library"})
+                .setURL("https://sky-music.github.io")
+                .setThumbnail("https://sky-music.github.io/assets/images/categories/original_players_songs/original_players_songs.png")
                 .setFields(
+                    { name: '\u200b', value: '\u200b'},
                     { name: "🇯🇵 Anime", value: "sky.music Anime\nReturns a random song from an anime." },
                     { name: "🎻 Classical", value: "sky.music Classical\nReturns a random classical song." },
                     { name: "🎬 Movies", value: "sky.music Movies\nReturns a random song from a movie." },
-                    { name: "🎼 Original", value: "sky.music Orifinal\nReturns a random player created song\nNote: There are only two as of right now." },
+                    { name: "🎼 Original", value: "sky.music Original\nReturns a random player created song\nNote: There are only two as of right now." },
                     { name: "🎸 Popular", value: "sky.music Popular\nReturns a random modern 'Pop' song." },
                     { name: "🎊 Traditional" , value: "sky.music Traditional\nReturns a random traditional song" },
                     { name: "🎮 Games", value: "sky.music Games\nReturns a random song from a video game" },
@@ -97,12 +102,13 @@ client.on('messageCreate', async (message) => {
             .setColor(0xd47839)
             .setTitle('List of Commands')
             .setDescription('Here is a list of commands that you can use with your Skykid!')
+            .setFooter({text: "Infographics Provided By The Sky:CoTL Infographic Discord Server"})
             .addFields(
                 { name: '\u200b', value: '\u200b'},
                 { name: '`sky.Help`', value: 'Displays a list of commands'},
                 { name: '`sky.Shard`', value: 'Displays the Shard for the day'},
                 { name: '`sky.Music`', value: 'Returns a random music sheet'},
-                { name: '`sky.Feedback Your Feedback Here`', values: "Allows you to submit feedback directly to me! Report bugs or send me ideas you'd like to see!"}
+                { name: '`sky.Feedback Your Feedback Here`', value: "Allows you to submit feedback directly to me! Report bugs or send me ideas you'd like to see!"}
             )
         message.reply({embeds: [embed], ephemeral : true})
     }
@@ -125,9 +131,11 @@ async function shardCommandHandler(message) {
             .setColor(shardInfo.isRed ? 0xFF0000 : 0x000000)
             .setTitle(`Todays Shard Is ${shardInfo.isRed ? 'Red' : 'Black'}`)
             .setDescription("Here is all the information you need in regard to the shard!")
+            .setFooter({text: "Infographics Provided By The Sky:CoTL Infographic Discord Server"})
+            .setTimestamp()
             .addFields(
                 { name: "Realm", value: `${shardInfo.realm}`},
-                { name: "Map", value: `${shardInfo.realm}` },
+                { name: "Map", value: `${shardInfo.map}` },
                 { name: "First Landing", value: `Lands At ${start1}\nEnds At ${end1}`},
                 { name: "Second Landing", value: `Lands At ${start2}\nEnds At ${end2}`},
                 { name: "Final Landing", value: `Lands At ${start3}\nEnds At${end3}`},
@@ -166,9 +174,10 @@ async function postDailyShardInfo() {
             .setColor(shardInfo.isRed ? 0xFF0000 : 0x000000)
             .setTitle(`Todays Shard Is ${shardInfo.isRed ? 'Red' : 'Black'}`)
             .setDescription("Here is all the information you need in regard to the shard!")
+            .setTimestamp()
             .addFields(
                 { name: "Realm", value: `${shardInfo.realm}`},
-                { name: "Map", value: `${shardInfo.realm}` },
+                { name: "Map", value: `${shardInfo.map}` },
                 { name: "First Landing", value: `Lands At ${start1}\nEnds At ${end1}`},
                 { name: "Second Landing", value: `Lands At ${start2}\nEnds At ${end2}`},
                 { name: "Final Landing", value: `Lands At ${start3}\nEnds At${end3}`},
