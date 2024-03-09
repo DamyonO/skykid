@@ -1,6 +1,7 @@
 const { Client, GatewayIntentBits, ActivityType, EmbedBuilder, Embed } = require('discord.js')
 const {getShardInfo} = require('./src/shard-calc');
 const{ infographs } = require('./src/infographics')
+const { randomMusic } = require('./src/random-music')
 const { time } = require('console');
 const {Duration, DateTime} = require('luxon')
 
@@ -35,6 +36,33 @@ client.on('messageCreate', async (message) => {
     const content = message.content.trim
     const args = message.content.slice(commandPrefix.length).trim().split(/ +/)
     const command = args.shift().toLowerCase();
+
+    if (command === "music"){
+        if(!args.length){
+            const embed = new EmbedBuilder()
+                .setTitle('How To Use the Music Command!')
+                .setDescription('Want to learn some new music, but dont know where to begin? Use the Music command!\nsky.music Genre')
+                .setColor(0x9769e0)
+                .setFields(
+                    { name: "🇯🇵 Anime", value: "sky.music Anime\nReturns a random song from an anime." },
+                    { name: "🎻 Classical", value: "sky.music Classical\nReturns a random classical song." },
+                    { name: "🎬 Movies", value: "sky.music Movies\nReturns a random song from a movie." },
+                    { name: "🎼 Original", value: "sky.music Orifinal\nReturns a random player created song\nNote: There are only two as of right now." },
+                    { name: "🎸 Popular", value: "sky.music Popular\nReturns a random modern 'Pop' song." },
+                    { name: "🎊 Traditional" , value: "sky.music Traditional\nReturns a random traditional song" },
+                    { name: "🎮 Games", value: "sky.music Games\nReturns a random song from a video game" },
+                    { name: "❓ Random", value: "sky.music Random\nReturns a random song from any genre" }
+                )
+            return message.reply({embeds : [embed]})
+        } else {
+            const music = await randomMusic(args)
+            if(music !== false){
+                message.reply(`I think you'd enjoy learning [this song](${music})!`)
+            } else {
+                message.reply(`I couldn't find any songs with the Genre '${args}'`)
+            }
+        }
+    }
 
     if (command === 'feedback'){
         if(!args.length){
@@ -73,12 +101,10 @@ client.on('messageCreate', async (message) => {
                 { name: '\u200b', value: '\u200b'},
                 { name: '`sky.Help`', value: 'Displays a list of commands'},
                 { name: '`sky.Shard`', value: 'Displays the Shard for the day'},
-                { name: 'sky.Music', value: 'Returns a random music sheet (WIP)'}
+                { name: '`sky.Music`', value: 'Returns a random music sheet'},
+                { name: '`sky.Feedback Your Feedback Here`', values: "Allows you to submit feedback directly to me! Report bugs or send me ideas you'd like to see!"}
             )
         message.reply({embeds: [embed], ephemeral : true})
-    }
-    if (command === "music") {
-        message.reply("WIP")
     }
 })
 
@@ -95,7 +121,6 @@ async function shardCommandHandler(message) {
     const end3 = `<t:${Math.floor(shardInfo.occurrences[2].end / 1000)}:T>`
     if(shardInfo.haveShard){
         const image = await infographs(shardInfo.isRed, shardInfo.map)
-        console.log("Image URL: ", image)
         const reply = new EmbedBuilder()
             .setColor(shardInfo.isRed ? 0xFF0000 : 0x000000)
             .setTitle(`Todays Shard Is ${shardInfo.isRed ? 'Red' : 'Black'}`)
@@ -136,6 +161,7 @@ async function postDailyShardInfo() {
     const end2 = shardInfo.occurrences[1].end.setZone(timeZone).toLocaleString(DateTime.TIME_WITH_SECONDS)
     const end3 = shardInfo.occurrences[2].end.setZone(timeZone).toLocaleString(DateTime.TIME_WITH_SECONDS)
     if(shardInfo.haveShard) {
+        const image = await infographs(shardInfo.isRed, shardInfo.map)
         const message = new EmbedBuilder()
             .setColor(shardInfo.isRed ? 0xFF0000 : 0x000000)
             .setTitle(`Todays Shard Is ${shardInfo.isRed ? 'Red' : 'Black'}`)
@@ -148,6 +174,7 @@ async function postDailyShardInfo() {
                 { name: "Final Landing", value: `Lands At ${start3}\nEnds At${end3}`},
                 { name: "Rewarded AC", value: `${shardInfo.rewardAC ?? 'Not Specified'}`}
             )
+            .setImage(image)
 
         channel.send(message);
     } else {
