@@ -101,6 +101,7 @@ client.on('messageCreate', async (message) => {
         const embed = new EmbedBuilder()
             .setColor(0xd47839)
             .setTitle('List of Commands')
+            .setAuthor({name: 'By DamyonO (Bucket)'})
             .setDescription('Here is a list of commands that you can use with your Skykid!')
             .setFooter({text: "Infographics Provided By The Sky:CoTL Infographic Discord Server"})
             .addFields(
