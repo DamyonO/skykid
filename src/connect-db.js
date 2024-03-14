@@ -1,7 +1,7 @@
 const mysql = require("mysql")
 require('dotenv').config()
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     user: process.env.DB_USER,
@@ -10,7 +10,7 @@ const db = mysql.createConnection({
 
 })
 
-db.connect(err =>{
+db.getConnection(err =>{
     if(err){
         console.log(err.message)
         return
