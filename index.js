@@ -16,7 +16,7 @@ const client = new Client({
     ]
 })
 
-const channelId = '1212872556626055278';
+const channelId = '1205897788215525376';
 const timeZone = 'America/Los_Angeles';
 const commandPrefix = "sky."
 
@@ -115,6 +115,45 @@ client.on('messageCreate', async (message) => {
     }
 })
 
+client.on("interactionCreate", async (interaction) => {
+    if(interaction.isCommand()) {
+        if(interaction.commandName === "shard") {
+            shardCommandHandler(interaction)
+        } else if(interaction.commandName === "music"){
+            const args = interaction.options.getString("genre")
+            if(args === null){
+                const embed = new EmbedBuilder()
+                    .setTitle('How To Use the Music Command!')
+                    .setDescription('Want to learn some new music, but dont know where to begin? Use the Music command!\nsky.music Genre')
+                    .setColor(0x9769e0)
+                    .setFooter({text: "Music Provided By the Sky Music Library"})
+                    .setAuthor({name: "Sky Music Library"})
+                    .setURL("https://sky-music.github.io")
+                    .setThumbnail("https://sky-music.github.io/assets/images/categories/original_players_songs/original_players_songs.png")
+                    .setFields(
+                        { name: '\u200b', value: '\u200b'},
+                        { name: "🇯🇵 Anime", value: "sky.music Anime\nReturns a random song from an anime." },
+                        { name: "🎻 Classical", value: "sky.music Classical\nReturns a random classical song." },
+                        { name: "🎬 Movies", value: "sky.music Movies\nReturns a random song from a movie." },
+                        { name: "🎼 Original", value: "sky.music Original\nReturns a random player created song\nNote: There are only two as of right now." },
+                        { name: "🎸 Popular", value: "sky.music Popular\nReturns a random modern 'Pop' song." },
+                        { name: "🎊 Traditional" , value: "sky.music Traditional\nReturns a random traditional song" },
+                        { name: "🎮 Games", value: "sky.music Games\nReturns a random song from a video game" },
+                        { name: "❓ Random", value: "sky.music Random\nReturns a random song from any genre" }
+                    )
+                return interaction.reply({embeds : [embed]})
+            } else {
+                const music = await randomMusic(args)
+                if(music !== false){
+                    interaction.reply(`I think you'd enjoy learning [this song](${music})!`)
+                } else {
+                    interaction.reply(`I couldn't find any songs with the Genre '${args}'`)
+                }
+            }
+        }
+    }
+})
+
 async function shardCommandHandler(message) {
     const now = new Date();
     const shardInfo = getShardInfo(now)
@@ -144,7 +183,7 @@ async function shardCommandHandler(message) {
             )
             .setImage(image)
 
-        message.reply({embeds: [reply]})
+        message.reply({embeds: [reply], ephemeral : true})
     } else {
         const imgURL = 'https://media.discordapp.net/attachments/801778605486374943/1213760402303885332/Image_6.jpeg?ex=65f6a576&is=65e43076&hm=75fc1e10cc1ac25dba9e2893ceb91511e2a36c5922c475aa267639d0fb53eb67&=&format=webp&width=1390&height=1390'
         const replyOptions = {

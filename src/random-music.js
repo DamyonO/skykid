@@ -6,7 +6,7 @@ require('dotenv').config()
 async function randomMusic(genre){
     return new Promise((resolve, reject) => {
         let query;
-        if (genre[0] === "random") {
+        if (genre[0].toLowerCase() === "random") {
             query = `
             SELECT link
             FROM music`;
