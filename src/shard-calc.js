@@ -37,7 +37,7 @@ const shardsInfo = [
             hours: 2,
             minutes: 10
         }),
-        maps: ['Village', 'Boneyard', 'Rink', 'Battlefield', 'Starlight']
+        maps: ['Koi', 'Boneyard', 'Rink', 'Battlefield', 'Starlight']
     },
     {
         noShardWkDay: [1,2],

@@ -141,7 +141,7 @@ client.on("interactionCreate", async (interaction) => {
                         { name: "🎮 Games", value: "sky.music Games\nReturns a random song from a video game" },
                         { name: "❓ Random", value: "sky.music Random\nReturns a random song from any genre" }
                     )
-                return interaction.reply({embeds : [embed]})
+                return interaction.reply({embeds : [embed], ephemeral: true})
             } else {
                 const music = await randomMusic(args)
                 if(music !== false){
@@ -185,9 +185,10 @@ async function shardCommandHandler(message) {
 
         message.reply({embeds: [reply], ephemeral : true})
     } else {
-        const imgURL = 'https://media.discordapp.net/attachments/801778605486374943/1213760402303885332/Image_6.jpeg?ex=65f6a576&is=65e43076&hm=75fc1e10cc1ac25dba9e2893ceb91511e2a36c5922c475aa267639d0fb53eb67&=&format=webp&width=1390&height=1390'
+        const imgURL = 'https://cdn.discordapp.com/attachments/801778605486374943/1221724817082810378/Image_5.jpeg?ex=66139ee6&is=660129e6&hm=9a67c6cb0ee5567f42e18359542af9d75ad9e8eca6959256607ca6507b5391ce&'
         const replyOptions = {
-            files: imgURL ? [imgURL] : []
+            files: imgURL ? [imgURL] : [],
+            ephemeral: true
         }
 
         message.reply(replyOptions)

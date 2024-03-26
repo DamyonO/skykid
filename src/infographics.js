@@ -5,6 +5,7 @@ const db = require("./connect-db")
 require('dotenv').config()
 
 function infographs(isRed, map) {
+    console.log(isRed, " ", map)
     return new Promise((resolve, reject) => {
         let query;
 
