@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, ActivityType, EmbedBuilder, Embed } = require('discord.js')
+const { Client, GatewayIntentBits, ActivityType, EmbedBuilder, Embed, ShardingManager } = require('discord.js')
 const {getShardInfo} = require('./src/shard-calc');
 const{ infographs } = require('./src/infographics')
 const { randomMusic } = require('./src/random-music')
@@ -226,9 +226,9 @@ async function postDailyShardInfo() {
             )
             .setImage(image)
 
-        channel.send(message);
+        channel.send({embeds: [message]});
     } else {
-        channel.send("No shard today");
+        channel.send("https://cdn.discordapp.com/attachments/801778605486374943/1221724817082810378/Image_5.jpeg?ex=66139ee6&is=660129e6&hm=9a67c6cb0ee5567f42e18359542af9d75ad9e8eca6959256607ca6507b5391ce&");
     }
 }
 
